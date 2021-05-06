@@ -1,0 +1,10 @@
+{
+  "ui": {
+    "app_name": "Sample SDK"
+  },
+  "error": {
+  },
+  "message": {
+    "remove_success": "Da xoa"
+  }
+}

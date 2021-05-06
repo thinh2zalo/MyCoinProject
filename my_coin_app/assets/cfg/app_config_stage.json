@@ -1,0 +1,14 @@
+{
+  "apiEndpoint": "",
+  "customerApiEndpoint": "",
+  "userApiEndpoint": "",
+  "apiEndpointAuth": "",
+  "authContentType": "application/x-www-form-urlencoded",
+  "socketEndpoint": "",
+  "clientId": "",
+  "scope": "",
+  "clientSecret": "",
+  "grantType": "",
+  "connectTimeout": 15000,
+  "receiveTimeout": 30000
+}
