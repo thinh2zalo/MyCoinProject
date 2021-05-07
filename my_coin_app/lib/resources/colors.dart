@@ -68,9 +68,6 @@ class MyColors {
   static const Color text_disabled = Color(0xFFD4E2FA);
   static const Color dark_text_disabled = Color(0xFFCEDBF2);
 
-  // static const Color button_disabled = Color(0xFF96BBFA);
-  // static const Color dark_button_disabled = Color(0xFF83A5E0);
-
   static const Color unselected_item_color = Color(0xffbfbfbf);
   static const Color dark_unselected_item_color = Color(0xFF4D4D4D);
 
@@ -104,14 +101,24 @@ class MyColors {
   static const Color highlightShimmerColor = Color(0xFFFAFAFA);
 
   /// Home Utility
-  static const Color home_utility_services_background = Color(0xff8CC9DB);
-  static const Color home_utility_billing_background = Color(0xffEDC663);
-  static const Color home_utility_feedback_background = Color(0xffB4D175);
-  static const Color home_utility_resident_background = Color(0xff71A5D7);
-  static const Color home_utility_parking_background = Color(0xffF08C98);
-  static const Color home_utility_services_intersect = Color(0xff7DC3D7);
-  static const Color home_utility_billing_intersect = Color(0xffEAC158);
-  static const Color home_utility_feedback_intersect = Color(0xffAACE5E);
-  static const Color home_utility_resident_intersect = Color(0xff679FD4);
-  static const Color home_utility_parking_intersect = Color(0xffEB808D);
+  static const Color background = Color(0XFFFFFFFF);
+
+  static const Color titleTextColor = const Color(0xff1d2635);
+  static const Color subTitleTextColor = const Color(0xff797878);
+
+  static const Color lightBlue1 = Color(0xff375efd);
+  static const Color lightBlue2 = Color(0xff3554d3);
+  static const Color navyBlue1 = Color(0xff15294a);
+  static const Color lightNavyBlue = Color(0xff6d7f99);
+  static const Color navyBlue2 = Color(0xff2c405b);
+
+  static const Color yellow = Color(0xfffbbd5c);
+  static const Color yellow2 = Color(0xffe7ad03);
+
+  static const Color lightGrey = Color(0xfff1f1f3);
+  static const Color card = Color(0xFF03C9A8);
+  static const Color darkgrey = Color(0xff625f6a);
+
+  static const Color black = Color(0xff040405);
+  static const Color lightblack = Color(0xff3E404D);
 }

@@ -22,7 +22,8 @@ class AppConfig {
 
   String get userApiEndpoint => globalConfiguration.get('userApiEndpoint');
 
-  String get customerApiEndpoint => globalConfiguration.get('customerApiEndpoint');
+  String get customerApiEndpoint =>
+      globalConfiguration.get('customerApiEndpoint');
 
   String get socketEndpoint => globalConfiguration.get('socketEndpoint');
 
