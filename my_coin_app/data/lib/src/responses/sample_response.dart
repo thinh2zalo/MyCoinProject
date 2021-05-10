@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:data/src/models/account_model.dart';
+
 import '../entities/entities.dart';
 import 'package:flutter_sdk/flutter_sdk.dart';
 
@@ -23,7 +25,26 @@ class SampleResultResponse<TResponse extends BaseResponse>
   }
 }
 
-class CoreResponse extends BaseResponse {}
+class AccountResponse extends BaseResponse {
+  String privateKey;
+  String publicKey;
+  String account;
+
+  AccountResponse({this.privateKey, this.publicKey, this.account});
+
+  @override
+  T fromJson<T extends BaseResponse>(Map<String, dynamic> json) {
+    return SampleResponse.fromJson(json) as T;
+  }
+
+  factory AccountResponse.fromJson(Map<String, dynamic> json) {
+    return AccountResponse(
+      privateKey: json['privateKey'],
+      publicKey: json['publicKey'],
+      account: json['account'],
+    );
+  }
+}
 
 class SampleResponse extends BaseResponse {
   final String id;

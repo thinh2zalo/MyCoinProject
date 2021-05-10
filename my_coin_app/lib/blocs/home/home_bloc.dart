@@ -7,7 +7,28 @@ class HomeBloc extends BaseBloc<HomeState> {
 
   HomeBloc(this._business) : super(state: HomeState());
 
-  void createWallet() async {
-    await _business.createNewWallet();
+  final _controller = BehaviorSubject<HomeState>.seeded(HomeState());
+
+  HomeState get latestState => _controller.stream.value;
+
+  Stream<List<Account>> get listAccount$ =>
+      _controller.stream.map((event) => event.listAccount);
+
+  SharedPreferences _prefs = SharedPreferences();
+
+  void createWallet(String account) async {
+    final result = await _business.createNewWallet(account);
+
+    // _controller.add(latestState.copyWith()
+  }
+
+  void loadData() {
+    // SharedPreferences.
+  }
+
+  @override
+  void dispose() {
+    _controller.close();
+    super.dispose();
   }
 }

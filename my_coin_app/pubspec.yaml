@@ -21,6 +21,8 @@ dependencies:
     path: data
   equatable: ^2.0.0
   google_fonts: ^0.3.9
+  modal_bottom_sheet: ^2.0.0
+
 
 
 

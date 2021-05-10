@@ -1,19 +1,20 @@
-import 'package:equatable/equatable.dart';
-
-class HomeState extends Equatable {
-  final String title;
-  final int count;
+class HomeState {
+  List<Account> listAccount;
 
   HomeState({
-    HomeState state,
-    String title,
-    int count,
-  })  : title = title ?? state?.title ?? '',
-        count = count ?? state?.count ?? 0;
+    List<Account> listAccount,
+  }) : listAccount = listAccount ?? [];
 
-  @override
-  List<Object> get props => [
-        title,
-        count,
-      ];
+  HomeState copyWith({
+    List<Account> listAccount2,
+  }) {
+    return HomeState(listAccount: listAccount2 ?? this.listAccount);
+  }
+}
+
+class Account {
+  final String privateKey;
+  final String publicKey;
+
+  Account({this.privateKey, this.publicKey});
 }

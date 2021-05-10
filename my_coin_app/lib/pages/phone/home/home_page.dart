@@ -3,6 +3,7 @@ import 'package:example/resources/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_sdk/flutter_sdk.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import '../../../blocs/blocs.dart';
 import 'package:example/extensions/extensions.dart';
 
@@ -16,6 +17,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends BaseState<HomePage, HomeBloc> {
+  final _accountController = TextEditingController();
   Widget _appBar(ThemeData theme) {
     return Row(
       children: <Widget>[
@@ -179,8 +181,62 @@ class _HomePageState extends BaseState<HomePage, HomeBloc> {
       width: 250,
       child: InkWell(
         onTap: () {
-          print('hihihihi');
-          bloc.createWallet();
+          showCupertinoModalBottomSheet(
+            context: context,
+            expand: false,
+            builder: (context) => Scaffold(
+              body: Container(
+                padding: UIHelper.paddingAll24,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Add account',
+                          style: theme.textTheme.headline5.bold,
+                        ),
+                        TextField(
+                          controller: _accountController,
+                          decoration: InputDecoration(
+                              hintText: 'Account nickname',
+                              hintStyle: theme.textTheme.headline6
+                                  .textColor(MyColors.gray.withOpacity(0.5))),
+                        ),
+                        UIHelper.verticalBox6,
+                        Text(
+                          'Example: Private funds, savings account, dApp account, Work funds, Airdrops',
+                          style: theme.textTheme.bodyText1.size10
+                              .textColor(MyColors.black.withOpacity(0.6)),
+                        ),
+                      ],
+                    ),
+                    TextButton(
+                        onPressed: () {
+                          bloc.createWallet(_accountController.text);
+                        },
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: MyColors.bg_gray,
+                            borderRadius: BorderRadius.circular(8.0),
+                          ),
+                          width: double.maxFinite,
+                          height: 40,
+                          child: Center(
+                            child: Text(
+                              'Add',
+                              style: theme.textTheme.bodyText1,
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
+                        ))
+                  ],
+                ),
+              ),
+            ),
+          );
         },
         child: Card(
           shape: RoundedRectangleBorder(

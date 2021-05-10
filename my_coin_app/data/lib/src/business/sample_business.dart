@@ -21,8 +21,9 @@ class SampleBusiness extends BaseBusiness<SampleEntity>
   }
 
   @override
-  Future<BaseResponse> createNewWallet() async {
-    final response = await _service.createNewWallet();
+  Future<SampleResultResponse<AccountResponse>> createNewWallet(
+      String account) async {
+    final response = await _service.createNewWallet(account);
     return response;
   }
 }
