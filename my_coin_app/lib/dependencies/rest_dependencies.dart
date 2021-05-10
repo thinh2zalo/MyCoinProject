@@ -8,7 +8,7 @@ class RestDependencies {
 
   static Future setup(GetIt injector) async {
     _injector.registerLazySingleton<IRestUtility>(
-        () => RestUtility('http://affinage.vn/wp-json/api/v1/'),
+        () => RestUtility('http://localhost:3001/'),
         instanceName: 'SAMPLE');
 
     _injector.registerLazySingleton<IRestUtility>(

@@ -1,7 +1,8 @@
 import '../model/base_entity.dart';
 import '../repository/base_repository.dart';
 
-class BaseBusiness<TEntity extends BaseEntity> implements IBaseBusiness<TEntity> {
+class BaseBusiness<TEntity extends BaseEntity>
+    implements IBaseBusiness<TEntity> {
   final IBaseRepository _repository;
 
   BaseBusiness([IBaseRepository repository]) : _repository = repository;
@@ -55,9 +56,19 @@ class BaseBusiness<TEntity extends BaseEntity> implements IBaseBusiness<TEntity>
   }
 
   @override
-  Future<List<TEntity>> list({String where, String orderBy, int pageIndex, int limit, List args = const <dynamic>[]}) async {
+  Future<List<TEntity>> list(
+      {String where,
+      String orderBy,
+      int pageIndex,
+      int limit,
+      List args = const <dynamic>[]}) async {
     if (_repository == null) return [];
-    return await _repository.list(where: where, orderBy: orderBy, pageIndex: pageIndex, limit: limit, args: args);
+    return await _repository.list(
+        where: where,
+        orderBy: orderBy,
+        pageIndex: pageIndex,
+        limit: limit,
+        args: args);
   }
 
   @override
@@ -90,7 +101,12 @@ abstract class IBaseBusiness<TEntity extends BaseEntity> {
 
   Future batchMarkDelete(List<TEntity> collection);
 
-  Future<List<TEntity>> list({String where, String orderBy, int pageIndex, int limit, final List<dynamic> args = const <dynamic>[]});
+  Future<List<TEntity>> list(
+      {String where,
+      String orderBy,
+      int pageIndex,
+      int limit,
+      final List<dynamic> args = const <dynamic>[]});
 
   Future exec(String query);
 

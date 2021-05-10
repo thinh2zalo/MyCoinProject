@@ -10,7 +10,7 @@ export 'src/network/rest_utility.dart';
 export 'src/shared_preferences/preferences.dart';
 export 'src/utility/utility.dart';
 export 'src/repository/base_repository.dart';
-export 'src/bussiness/base_business.dart';
+export 'src/bussiness/core_business.dart';
 export 'src/database/base_database.dart';
 
 export 'package:get_it/get_it.dart';

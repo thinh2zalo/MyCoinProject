@@ -12,8 +12,5 @@ class DatabaseDependencies {
     if (kDebugMode) {
       print(dbPath);
     }
-
-    injector.registerSingleton<CoreDatabase>(
-        CoreDatabase(path.join(dbPath, 'core_database.db'), scriptPath));
   }
 }

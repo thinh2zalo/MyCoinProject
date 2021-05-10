@@ -8,16 +8,22 @@ Map<String, dynamic> _getMap(dynamic data) {
   return json.decode(data.toString()) as Map<String, dynamic>;
 }
 
-class SampleResultResponse<TResponse extends BaseResponse> extends BaseResponse {
+class SampleResultResponse<TResponse extends BaseResponse>
+    extends BaseResponse {
   List<TResponse> items;
 
   SampleResultResponse({this.items});
 
   SampleResultResponse.fromJson(Map<String, dynamic> json) {
     final response = GetIt.I.get<TResponse>();
-    items = (json['items'] as List)?.map((item) => response.fromJson(_getMap(item)) as TResponse)?.toList() ?? [];
+    items = (json['items'] as List)
+            ?.map((item) => response.fromJson(_getMap(item)) as TResponse)
+            ?.toList() ??
+        [];
   }
 }
+
+class CoreResponse extends BaseResponse {}
 
 class SampleResponse extends BaseResponse {
   final String id;

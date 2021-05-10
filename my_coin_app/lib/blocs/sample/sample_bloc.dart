@@ -7,18 +7,6 @@ class SampleBloc extends BaseBloc<List<SampleModel>> {
 
   Future loadData() async {
     print('load data');
-    loading.add(true);
-    print('loading $loading');
-
-    final response = await _business.fetchProduct();
-    loading.add(false);
-    print('loading $loading');
-    if (response.success) {
-      final entities = await _business.list();
-      final models = entities?.map((entity) => entity.toModel())?.toList();
-      emit(models);
-    }
-    print('state');
   }
 
   Future reload() async {

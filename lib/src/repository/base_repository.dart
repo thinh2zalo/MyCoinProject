@@ -5,48 +5,48 @@ import 'package:uuid/uuid.dart';
 import '../extensions/extension.dart';
 
 class BaseRepository<TEntity extends BaseEntity> implements IBaseRepository<TEntity> {
-  final BaseDatabase _db;
+  // final BaseDatabase _db;
 
-  BaseRepository(this._db);
+  // BaseRepository(this._db);
 
   Uuid _uuid = Uuid();
 
   @override
   Future batchDelete(List<TEntity> collection) async {
-    if (_db == null || collection == null) return;
-    await _db.connection.batchDelete(collection);
+    // if (_db == null || collection == null) return;
+    // await _db.connection.batchDelete(collection);
   }
 
   @override
   Future batchInsertOrUpdate(List<TEntity> collection) async {
-    if (_db == null || collection == null) return;
-    await _db.connection.batchInsert(collection);
+    // if (_db == null || collection == null) return;
+    // await _db.connection.batchInsert(collection);
   }
 
   @override
   Future batchMarkDelete(List<TEntity> collection) async {
-    if (_db == null || collection == null) return;
-    await _db.connection.batchMarkDelete(collection);
+    // if (_db == null || collection == null) return;
+    // await _db.connection.batchMarkDelete(collection);
   }
 
   @override
   Future batchUpdate(List<TEntity> collection) async {
-    if (_db == null || collection == null) return;
-    await _db.connection.batchUpdate(collection);
+    // if (_db == null || collection == null) return;
+    // await _db.connection.batchUpdate(collection);
   }
 
   @override
   Future delete(TEntity entity) async {
-    if (_db == null || entity == null) return;
-    return await _db.connection.delete(entity);
+    // if (_db == null || entity == null) return;
+    // return await _db.connection.delete(entity);
   }
 
-  @override
-  Future insertOrUpdate(TEntity entity) async {
-    if (_db == null || entity == null) return;
-    entity.id ??= _uuid.v4();
-    return await _db.connection.insertOrUpdate(entity);
-  }
+  // @override
+  // Future insertOrUpdate(TEntity entity) async {
+  //   if (_db == null || entity == null) return;
+  //   entity.id ??= _uuid.v4();
+  //   return await _db.connection.insertOrUpdate(entity);
+  // }
 
   @override
   Future markDelete(TEntity entity) async {
@@ -55,14 +55,14 @@ class BaseRepository<TEntity extends BaseEntity> implements IBaseRepository<TEnt
 
   @override
   Future update(TEntity entity) async {
-    if (_db == null || entity == null) return;
-    return await _db.connection.update(entity);
+    // if (_db == null || entity == null) return;
+    // return await _db.connection.update(entity);
   }
 
   @override
   Future exec(String query) async {
-    if (_db == null) return;
-    await _db.connection.exec(query);
+    // if (_db == null) return;
+    // await _db.connection.exec(query);
   }
 
   @override
@@ -95,14 +95,20 @@ class BaseRepository<TEntity extends BaseEntity> implements IBaseRepository<TEnt
   )
           fromJson,
       [final List<dynamic> args = const <dynamic>[]]) async {
-    var result = await _db.connection.list(query, args);
-    return result.map((json) => fromJson(json)).toList();
+    // var result = await _db.connection.list(query, args);
+    // return result.map((json) => fromJson(json)).toList();
   }
 
   @override
   Future<TEntity> getById(String id) async {
     var result = await list(where: 'id = ?', orderBy: null, pageIndex: null, limit: 1, args: <String>[id]);
     return result?.firstOrDefault();
+  }
+
+  @override
+  Future insertOrUpdate(TEntity entity) {
+    // // TODO: implement insertOrUpdate
+    // throw UnimplementedError();
   }
 }
 

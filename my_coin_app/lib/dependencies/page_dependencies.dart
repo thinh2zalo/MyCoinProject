@@ -7,7 +7,7 @@ import '../pages/pages.dart';
 
 class PageDependencies {
   static Future setup(GetIt injector) async {
-    injector.registerFactory<Widget>(() => HomePage(),
+    injector.registerFactory<Widget>(() => HomePage(injector()),
         instanceName: Routes.home);
   }
 }

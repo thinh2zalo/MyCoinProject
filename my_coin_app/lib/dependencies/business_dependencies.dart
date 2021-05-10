@@ -3,6 +3,6 @@ import 'package:data/data.dart';
 
 class BusinessDependencies {
   static Future setup(GetIt injector) async {
-    injector.registerFactory<ISampleBusiness>(() => SampleBusiness(injector(), injector()));
+    injector.registerFactory<ISampleBusiness>(() => SampleBusiness(injector()));
   }
 }

@@ -62,7 +62,7 @@ class _AppState extends State<App> {
   Widget _buildApp(AppState state) {
     return MaterialApp(
       navigatorKey: navigationKey,
-      title: UI.app_name,
+      title: 'MyCoin',
       debugShowCheckedModeBanner: false,
       theme: ThemeBuilder.build(context, AppTheme.light.value,
           fontFamily: state?.fontFamily),

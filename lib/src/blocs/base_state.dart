@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 import '../app_localizations/app_localizations.dart';
 import '../utility/log.dart';
-import 'base_bloc.dart';
+import 'core_bloc.dart';
 import 'loading_dialog.dart';
 import 'loading_widget.dart';
 

@@ -4,7 +4,6 @@ import '../blocs/blocs.dart';
 
 class BlocDependencies {
   static Future setup(GetIt injector) async {
-    injector.registerFactory<SampleBloc>(() => SampleBloc(injector()));
-    injector.registerFactory<SampleDetailBloc>(() => SampleDetailBloc(injector()));
+    injector.registerFactory<HomeBloc>(() => HomeBloc(injector()));
   }
 }

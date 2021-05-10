@@ -1,18 +1,21 @@
 import 'package:example/helpers/helpers.dart';
 import 'package:example/resources/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_sdk/flutter_sdk.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../../blocs/blocs.dart';
 import 'package:example/extensions/extensions.dart';
 
+// ignore: must_be_immutable
 class HomePage extends StatefulWidget {
-  HomePage({Key key}) : super(key: key);
+  HomeBloc bloc;
+  HomePage(this.bloc);
 
   @override
   _HomePageState createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomePageState extends BaseState<HomePage, HomeBloc> {
   Widget _appBar(ThemeData theme) {
     return Row(
       children: <Widget>[
@@ -37,7 +40,7 @@ class _HomePageState extends State<HomePage> {
         scrollDirection: Axis.horizontal,
         itemBuilder: (context, index) {
           if (index == 2) {
-            return _buildAddAccount(theme);
+            return _buildCreateWallet(theme);
           }
 
           return Container(
@@ -170,48 +173,55 @@ class _HomePageState extends State<HomePage> {
   //   );
   // }
 
-  Widget _buildAddAccount(ThemeData theme) {
+  Widget _buildCreateWallet(ThemeData theme) {
     return Container(
       height: 160,
       width: 250,
-      child: Card(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(15.0),
-        ),
-        color: MyColors.card,
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Icon(
-                Icons.add_circle_rounded,
-                size: 35,
-                color: MyColors.primaryWhite,
-              ),
-              Text(
-                'Add account',
-                style: theme.textTheme.headline6.bold
-                    .textColor(MyColors.primaryWhite),
-              ),
-              Text(
-                'to manage your stacks separately',
-                style: theme.textTheme.bodyText2
-                    .size(10)
-                    .textColor(MyColors.primaryWhite),
-              ),
-              Text(
-                'For example',
-                style:
-                    theme.textTheme.bodyText2.size(10).textColor(MyColors.gray),
-              ),
-              Text(
-                'day-to-day payments, Long-tern savings, dApp play funds',
-                style: theme.textTheme.bodyText2.size10
-                    .textColor(MyColors.primaryWhite),
-              ),
-            ],
+      child: InkWell(
+        onTap: () {
+          print('hihihihi');
+          bloc.createWallet();
+        },
+        child: Card(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(15.0),
+          ),
+          color: MyColors.card,
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Icon(
+                  Icons.add_circle_rounded,
+                  size: 35,
+                  color: MyColors.primaryWhite,
+                ),
+                Text(
+                  'Add account',
+                  style: theme.textTheme.headline6.bold
+                      .textColor(MyColors.primaryWhite),
+                ),
+                Text(
+                  'to manage your stacks separately',
+                  style: theme.textTheme.bodyText2
+                      .size(10)
+                      .textColor(MyColors.primaryWhite),
+                ),
+                Text(
+                  'For example',
+                  style: theme.textTheme.bodyText2
+                      .size(10)
+                      .textColor(MyColors.gray),
+                ),
+                Text(
+                  'day-to-day payments, Long-tern savings, dApp play funds',
+                  style: theme.textTheme.bodyText2.size10
+                      .textColor(MyColors.primaryWhite),
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -322,4 +332,7 @@ class _HomePageState extends State<HomePage> {
           )),
     )));
   }
+
+  @override
+  HomeBloc get bloc => widget.bloc;
 }

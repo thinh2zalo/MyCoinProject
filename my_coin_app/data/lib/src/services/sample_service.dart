@@ -19,6 +19,15 @@ class SampleService implements ISampleService {
   @override
   Future<SampleResultResponse<SampleResponse>> fetchProduct() async {
     final response = await _rest.request('products', Method.GET);
-    return SampleResultResponse.fromJson(_getMap(response.data))..statusCode = response.statusCode;
+    return SampleResultResponse.fromJson(_getMap(response.data))
+      ..statusCode = response.statusCode;
+  }
+
+  @override
+  Future<BaseResponse> createNewWallet() async {
+    final response =
+        await _rest.request('http://localhost:3001/newWallet', Method.POST);
+    return SampleResultResponse.fromJson(_getMap(response.data))
+      ..statusCode = response.statusCode;
   }
 }
