@@ -4,5 +4,5 @@
 // import 'interfaces/sample_repository.dart';
 
 // class SampleRepository extends BaseRepository<SampleEntity> implements ISampleRepository {
-//   SampleRepository(CoreDatabase db) : super(db);
+//   SampleRepository(BaseDatabase db) : super(db);
 // }

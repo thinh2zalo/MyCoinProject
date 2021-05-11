@@ -7,7 +7,7 @@ import 'interfaces/sample_business.dart';
 class SampleBusiness extends BaseBusiness<SampleEntity>
     implements ISampleBusiness {
   final ISampleService _service;
-
+  final db = DatabaseHelper();
   SampleBusiness(this._service);
 
   @override
@@ -24,6 +24,12 @@ class SampleBusiness extends BaseBusiness<SampleEntity>
   Future<SampleResultResponse<AccountResponse>> createNewWallet(
       String account) async {
     final response = await _service.createNewWallet(account);
+    if (response.success) {
+      final entities = response.items?.map((item) => item.toModel())?.toList();
+      for (AccountModel a in entities) {
+        db.saveUser(a);
+      }
+    }
     return response;
   }
 }

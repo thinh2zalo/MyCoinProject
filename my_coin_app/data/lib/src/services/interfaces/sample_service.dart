@@ -4,5 +4,5 @@ import '../../responses/response.dart';
 
 abstract class ISampleService {
   Future<SampleResultResponse<SampleResponse>> fetchProduct();
-  Future<BaseResponse> createNewWallet(String account);
+  Future<SampleResultResponse<AccountResponse>> createNewWallet(String account);
 }

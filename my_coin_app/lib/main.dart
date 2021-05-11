@@ -16,6 +16,7 @@ void main() async {
     yield LicenseEntryWithLineBreaks(['google_fonts'], license);
   });
   WidgetsFlutterBinding.ensureInitialized();
+
   await AppConfig.instance.loadConfig(env: Environment.dev);
   await AppDependencies.setup();
 

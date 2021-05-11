@@ -1,4 +1,6 @@
+import 'package:data/data.dart';
 import 'package:example/helpers/helpers.dart';
+import 'package:example/pages/phone/home/card_account_widget.dart';
 import 'package:example/resources/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_sdk/flutter_sdk.dart';
@@ -34,70 +36,29 @@ class _HomePageState extends BaseState<HomePage, HomeBloc> {
   }
 
   Widget _buildListCard(ThemeData theme) {
-    return Container(
-      width: double.maxFinite,
-      height: 160,
-      child: ListView.builder(
-        shrinkWrap: true,
-        scrollDirection: Axis.horizontal,
-        itemBuilder: (context, index) {
-          if (index == 2) {
-            return _buildCreateWallet(theme);
-          }
-
+    return StreamBuilder<List<AccountModel>>(
+        stream: bloc.listAccount$,
+        builder: (context, snapshot) {
+          final length = snapshot?.data?.length ?? 0;
+          final listAccount = snapshot?.data ?? [];
           return Container(
+            width: double.maxFinite,
             height: 160,
-            width: 250,
-            child: Card(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(15.0),
-              ),
-              color: MyColors.card,
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'My main account',
-                      style: theme.textTheme.bodyText2
-                          .textColor(MyColors.primaryWhite),
-                    ),
-                    Text(
-                      '0x5b49...a4E2',
-                      style: theme.textTheme.bodyText2.textColor(MyColors.gray),
-                    ),
-                    UIHelper.verticalBox6,
-                    Row(
-                      children: [
-                        Text(
-                          '0.00',
-                          style: theme.textTheme.headline4.bold
-                              .textColor(MyColors.primaryWhite),
-                        ),
-                        Icon(Icons.arrow_right, color: MyColors.primaryWhite)
-                      ],
-                    ),
-                    Text(
-                      '0 ETH',
-                      style: theme.textTheme.bodyText2.semiBold
-                          .textColor(MyColors.primaryWhite),
-                    ),
-                    Text(
-                      'and 0 tokens',
-                      style: theme.textTheme.bodyText2
-                          .textColor(MyColors.primaryWhite),
-                    ),
-                  ],
-                ),
-              ),
+            child: ListView.builder(
+              shrinkWrap: true,
+              scrollDirection: Axis.horizontal,
+              itemCount: length + 1,
+              itemBuilder: (context, index) {
+                if (index == length) {
+                  return _buildCreateWallet(theme);
+                } else
+                  return CardAccountWidget(
+                    accountModel: listAccount[index],
+                  );
+              },
             ),
           );
-        },
-        itemCount: 3,
-      ),
-    );
+        });
   }
 
   // Widget _icon(IconData icon, String text) {
@@ -216,6 +177,7 @@ class _HomePageState extends BaseState<HomePage, HomeBloc> {
                     TextButton(
                         onPressed: () {
                           bloc.createWallet(_accountController.text);
+                          Navigator.pop(context);
                         },
                         child: Container(
                           decoration: BoxDecoration(

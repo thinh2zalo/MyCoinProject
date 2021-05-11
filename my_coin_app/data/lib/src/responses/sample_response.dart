@@ -26,22 +26,33 @@ class SampleResultResponse<TResponse extends BaseResponse>
 }
 
 class AccountResponse extends BaseResponse {
+  int id;
   String privateKey;
   String publicKey;
   String account;
 
-  AccountResponse({this.privateKey, this.publicKey, this.account});
+  AccountResponse({this.id, this.privateKey, this.publicKey, this.account});
 
   @override
   T fromJson<T extends BaseResponse>(Map<String, dynamic> json) {
-    return SampleResponse.fromJson(json) as T;
+    return AccountResponse.fromJson(json) as T;
   }
 
   factory AccountResponse.fromJson(Map<String, dynamic> json) {
     return AccountResponse(
+      id: json['userId'],
       privateKey: json['privateKey'],
       publicKey: json['publicKey'],
       account: json['account'],
+    );
+  }
+
+  AccountModel toModel() {
+    return AccountModel(
+      id: this.id,
+      privateKey: this.privateKey,
+      publicKey: this.publicKey,
+      accountName: this.account,
     );
   }
 }

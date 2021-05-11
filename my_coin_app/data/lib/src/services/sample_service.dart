@@ -28,8 +28,9 @@ class SampleService implements ISampleService {
       String account) async {
     final response = await _rest.request(
         'http://localhost:3001/new-wallet', Method.POST,
-        queryParameters: {'account': account});
-    return SampleResultResponse.fromJson(_getMap(response.data))
+        data: {'account': account});
+    return SampleResultResponse<AccountResponse>.fromJson(
+        _getMap(response.data))
       ..statusCode = response.statusCode;
   }
 }

@@ -1,20 +1,15 @@
+import 'package:data/data.dart';
+
 class HomeState {
-  List<Account> listAccount;
+  List<AccountModel> listAccount;
 
   HomeState({
-    List<Account> listAccount,
+    List<AccountModel> listAccount,
   }) : listAccount = listAccount ?? [];
 
   HomeState copyWith({
-    List<Account> listAccount2,
+    List<AccountModel> listAccount2,
   }) {
     return HomeState(listAccount: listAccount2 ?? this.listAccount);
   }
-}
-
-class Account {
-  final String privateKey;
-  final String publicKey;
-
-  Account({this.privateKey, this.publicKey});
 }
