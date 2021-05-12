@@ -16,14 +16,23 @@ class HomeBloc extends BaseBloc<HomeState> {
       _controller.stream.map((event) => event.listAccount);
 
   void createWallet(String account) async {
-    final result = await _business.createNewWallet(account);
-
     final listAccount = await db.getUser();
-    _controller.add(latestState.copyWith(listAccount2: listAccount));
+    _controller.add(latestState.copyWith(listAccount: listAccount));
   }
 
-  void loadData() {
-    // SharedPreferences.
+  Future<void> loadData() async {
+    final listAccount = await db.getUser();
+    List<AccountModel> listAccountWithData = [];
+    for (AccountModel account in listAccount) {
+      final accountData = await getInforAccount(account.publicKey);
+      listAccountWithData.add(account.coppyWith(amount: accountData.balance));
+    }
+    _controller.add(latestState.copyWith(listAccount: listAccountWithData));
+  }
+
+  Future<AccountDataResponse> getInforAccount(String address) async {
+    final response = await _business.getAccountData(address);
+    return response.items[0];
   }
 
   @override

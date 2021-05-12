@@ -30,8 +30,10 @@ class AccountResponse extends BaseResponse {
   String privateKey;
   String publicKey;
   String account;
+  int amount;
 
-  AccountResponse({this.id, this.privateKey, this.publicKey, this.account});
+  AccountResponse(
+      {this.id, this.privateKey, this.publicKey, this.account, this.amount});
 
   @override
   T fromJson<T extends BaseResponse>(Map<String, dynamic> json) {
@@ -44,6 +46,7 @@ class AccountResponse extends BaseResponse {
       privateKey: json['privateKey'],
       publicKey: json['publicKey'],
       account: json['account'],
+      amount: json['amount'],
     );
   }
 
@@ -53,6 +56,26 @@ class AccountResponse extends BaseResponse {
       privateKey: this.privateKey,
       publicKey: this.publicKey,
       accountName: this.account,
+      amount: this.amount,
+    );
+  }
+}
+
+class AccountDataResponse extends BaseResponse {
+  int id;
+
+  int balance;
+
+  AccountDataResponse({this.balance});
+
+  @override
+  T fromJson<T extends BaseResponse>(Map<String, dynamic> json) {
+    return AccountDataResponse.fromJson(json) as T;
+  }
+
+  factory AccountDataResponse.fromJson(Map<String, dynamic> json) {
+    return AccountDataResponse(
+      balance: json['addressBalance'],
     );
   }
 }

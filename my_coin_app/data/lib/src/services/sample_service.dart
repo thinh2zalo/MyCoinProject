@@ -33,4 +33,14 @@ class SampleService implements ISampleService {
         _getMap(response.data))
       ..statusCode = response.statusCode;
   }
+
+  @override
+  Future<SampleResultResponse<AccountDataResponse>> getAccountAdress(
+      String account) async {
+    final response = await _rest.request(
+        'http://localhost:3001/address/$account', Method.GET);
+    return SampleResultResponse<AccountDataResponse>.fromJson(
+        _getMap(response.data))
+      ..statusCode = response.statusCode;
+  }
 }

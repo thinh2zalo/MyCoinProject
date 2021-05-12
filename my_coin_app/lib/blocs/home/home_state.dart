@@ -8,8 +8,8 @@ class HomeState {
   }) : listAccount = listAccount ?? [];
 
   HomeState copyWith({
-    List<AccountModel> listAccount2,
+    List<AccountModel> listAccount,
   }) {
-    return HomeState(listAccount: listAccount2 ?? this.listAccount);
+    return HomeState(listAccount: listAccount ?? this.listAccount);
   }
 }

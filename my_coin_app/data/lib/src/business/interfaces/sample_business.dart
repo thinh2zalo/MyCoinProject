@@ -3,4 +3,6 @@ import 'package:flutter_sdk/flutter_sdk.dart';
 
 abstract class ISampleBusiness extends IBaseBusiness<SampleEntity> {
   Future<SampleResultResponse<AccountResponse>> createNewWallet(String account);
+  Future<SampleResultResponse<AccountDataResponse>> getAccountData(
+      String address);
 }

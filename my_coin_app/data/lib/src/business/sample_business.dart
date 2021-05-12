@@ -32,4 +32,12 @@ class SampleBusiness extends BaseBusiness<SampleEntity>
     }
     return response;
   }
+
+  @override
+  Future<SampleResultResponse<AccountDataResponse>> getAccountData(
+      String address) async {
+    final response = await _service.getAccountAdress(address);
+    if (response.success) {}
+    return response;
+  }
 }

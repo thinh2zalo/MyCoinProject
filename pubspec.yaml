@@ -25,6 +25,7 @@ dependencies:
   visibility_detector: ^0.1.5
   flutter_spinkit: ^4.1.2+1
   intl: ^0.17.0
+  socket_io_client: ^1.0.1
   secure_storage:
     git:
       url: https://gitlab.com/fas-mobile-system-opensource/plugins.git

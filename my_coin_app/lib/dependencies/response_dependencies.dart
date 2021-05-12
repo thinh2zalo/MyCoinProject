@@ -5,5 +5,6 @@ class ResponseDependencies {
   static Future setup(GetIt injector) async {
     injector.registerFactory<SampleResponse>(() => SampleResponse());
     injector.registerFactory<AccountResponse>(() => AccountResponse());
+    injector.registerFactory<AccountDataResponse>(() => AccountDataResponse());
   }
 }

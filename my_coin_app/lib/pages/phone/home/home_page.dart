@@ -20,6 +20,12 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends BaseState<HomePage, HomeBloc> {
   final _accountController = TextEditingController();
+
+  @override
+  void loadData() {
+    bloc.loadData();
+  }
+
   Widget _appBar(ThemeData theme) {
     return Row(
       children: <Widget>[
@@ -284,34 +290,36 @@ class _HomePageState extends BaseState<HomePage, HomeBloc> {
         ),
         UIHelper.verticalBox6,
         Expanded(
-          child: Container(
-            height: 120,
-            width: 140,
-            child: Card(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(15.0),
-                side: BorderSide(
-                  color: Colors.grey,
-                  width: 1.0,
+          child: InkWell(
+            child: Container(
+              height: 120,
+              width: 140,
+              child: Card(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(15.0),
+                  side: BorderSide(
+                    color: Colors.grey,
+                    width: 1.0,
+                  ),
                 ),
-              ),
-              color: MyColors.primaryWhite,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(
-                    Icons.add_circle_outline,
-                    size: 40,
-                  ),
-                  Text(
-                    'Buy Ether',
-                    style: theme.textTheme.bodyText1.bold,
-                  ),
-                  Text(
-                    'Visa or MasterCard',
-                    style: theme.textTheme.bodyText2,
-                  )
-                ],
+                color: MyColors.primaryWhite,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(
+                      Icons.add_circle_outline,
+                      size: 40,
+                    ),
+                    Text(
+                      'Buy Ether',
+                      style: theme.textTheme.bodyText1.bold,
+                    ),
+                    Text(
+                      'Visa or MasterCard',
+                      style: theme.textTheme.bodyText2,
+                    )
+                  ],
+                ),
               ),
             ),
           ),
