@@ -23,6 +23,8 @@ dependencies:
   google_fonts: ^0.3.9
   modal_bottom_sheet: ^2.0.0
   socket_io_client: ^1.0.1
+  flutter_easyloading: ^3.0.0
+
 
 
 

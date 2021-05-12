@@ -72,4 +72,13 @@ class SampleService implements ISampleService {
         _getMap(response.data))
       ..statusCode = response.statusCode;
   }
+
+  @override
+  Future<bool> mine() async {
+    final response = await _rest.request(
+      'http://localhost:3001/mine',
+      Method.GET,
+    );
+    return true;
+  }
 }

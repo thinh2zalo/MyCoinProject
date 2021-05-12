@@ -50,4 +50,9 @@ class SampleBusiness extends BaseBusiness<SampleEntity>
     final response = _service.fetchPendingTransaction();
     return response;
   }
+
+  @override
+  Future<void> mining() async {
+    _service.mine();
+  }
 }

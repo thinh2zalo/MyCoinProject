@@ -9,8 +9,10 @@ import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 class CardAccountWidget extends StatelessWidget {
   final AccountModel accountModel;
-  CardAccountWidget({Key key, this.accountModel}) : super(key: key);
-  final homeBloc = HomeBloc(GetIt.instance());
+  final HomeBloc homeBloc;
+
+  CardAccountWidget({Key key, this.accountModel, this.homeBloc})
+      : super(key: key);
 
   final recipientController = TextEditingController();
   final amountController = TextEditingController();
@@ -310,6 +312,7 @@ class CardAccountWidget extends StatelessWidget {
                                         sender: accountModel.publicKey,
                                         recipient: recipientController.text,
                                       );
+                                      homeBloc.loadData();
                                       Navigator.pop(context);
                                     },
                                     child: Container(

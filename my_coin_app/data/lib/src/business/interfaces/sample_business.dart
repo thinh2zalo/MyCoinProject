@@ -11,4 +11,6 @@ abstract class ISampleBusiness extends IBaseBusiness<SampleEntity> {
       {String privateKey, String sender, int amount, String recipient});
 
   Future<SampleResultResponse<TransactionResponse>> fetchPendingTransaction();
+
+  Future<void> mining();
 }

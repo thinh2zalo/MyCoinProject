@@ -3,6 +3,7 @@ import 'package:example/helpers/helpers.dart';
 import 'package:example/pages/phone/home/card_account_widget.dart';
 import 'package:example/resources/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_sdk/flutter_sdk.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import '../../../blocs/blocs.dart';
@@ -60,6 +61,7 @@ class _HomePageState extends BaseState<HomePage, HomeBloc> {
                 } else
                   return CardAccountWidget(
                     accountModel: listAccount[index],
+                    homeBloc: bloc,
                   );
               },
             ),
@@ -68,28 +70,35 @@ class _HomePageState extends BaseState<HomePage, HomeBloc> {
   }
 
   Widget _buildTransactionItem(
-      ThemeData theme, String sender, String recipient, String amount) {
+      ThemeData theme, String sender, String recipient, int amount) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
               children: [
-                Text('Sender: ', style: theme.textTheme.bodyText2),
-                Text(sender, style: theme.textTheme.bodyText2),
+                Text('Sender: ', style: theme.textTheme.bodyText2.semiBold),
+                Text(
+                    '${sender.substring(0, 5)} . . . ${sender.substring(sender.length - 10, sender.length - 1)}',
+                    style: theme.textTheme.bodyText2),
               ],
             ),
             UIHelper.verticalBox4,
             Row(
               children: [
-                Text('recipient: ', style: theme.textTheme.bodyText2),
-                Text(recipient, style: theme.textTheme.bodyText2),
+                Text('recipient: ', style: theme.textTheme.bodyText2.semiBold),
+                Text(
+                    '${recipient.substring(0, 5)} . . . ${recipient.substring(sender.length - 10, sender.length - 1)}',
+                    style: theme.textTheme.bodyText2),
               ],
             ),
           ],
         ),
-        Text('\$ $amount', style: theme.textTheme.bodyText2),
+        Text('\$ $amount',
+            style: theme.textTheme.bodyText2.size20.semiBold
+                .textColor(MyColors.card)),
       ],
     );
   }
@@ -138,6 +147,14 @@ class _HomePageState extends BaseState<HomePage, HomeBloc> {
                             ? null
                             : () {
                                 bloc.createWallet(_accountController.text);
+                                EasyLoading.show();
+
+                                Future.delayed(
+                                    const Duration(milliseconds: 500), () {
+                                  EasyLoading.showSuccess('Great Success!',
+                                      duration: Duration(seconds: 1));
+                                });
+
                                 Navigator.pop(context);
                               },
                         child: Container(
@@ -309,25 +326,78 @@ class _HomePageState extends BaseState<HomePage, HomeBloc> {
               _buildListCard(theme),
               Text(
                 'Manage account',
+                style: theme.textTheme.bodyText1,
               ),
               UIHelper.verticalBox16,
               _buildTradingActivities(theme),
+              UIHelper.verticalBox16,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'Pendding Transaction',
+                    style: theme.textTheme.headline6.bold,
+                  ),
+                  InkWell(
+                    onTap: () {
+                      bloc.mining();
+                      EasyLoading.show();
+                      Future.delayed(const Duration(milliseconds: 500), () {
+                        EasyLoading.showSuccess('Great Success!',
+                            duration: Duration(seconds: 1));
+                      });
+                      bloc.loadData();
+                    },
+                    child: Container(
+                      width: 80,
+                      height: 30,
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                        color: MyColors.card,
+                        borderRadius: BorderRadius.circular(8.0),
+                      ),
+                      child: Text(
+                        'Mine',
+                        style: theme.textTheme.bodyText2.primaryWhiteColor,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              UIHelper.verticalBox16,
+              StreamBuilder<List<TransactionResponse>>(
+                  stream: bloc.listTransaction$,
+                  builder: (context, snapshot) {
+                    print('snapshot ${snapshot?.data?.length}');
+                    final list = snapshot?.data ?? [];
+                    return _buildListPenddingTransaction(theme, list);
+                  }),
             ],
           )),
     )));
   }
 
-  Widget _buildListPenddingTransaction(ThemeData theme) {
-    // return Container(
-    //   child: StreamBuilder<Lis>(
-    //     stream: null,
-    //     builder: (context, snapshot) {
-    //       return ListView.builder(
-
-    //         itemBuilder: () {});
-    //     }
-    //   ),
-    // );
+  Widget _buildListPenddingTransaction(
+      ThemeData theme, List<TransactionResponse> list) {
+    return Container(
+      child: ListView.builder(
+          shrinkWrap: true,
+          physics: NeverScrollableScrollPhysics(),
+          itemCount: list.length,
+          itemBuilder: (context, index) {
+            final transaction = list[index];
+            return Column(
+              children: [
+                _buildTransactionItem(theme, transaction.sender,
+                    transaction.recipient, transaction.amount),
+                // Divider(
+                //   thickness: 2,
+                // ),
+                UIHelper.verticalBox20
+              ],
+            );
+          }),
+    );
   }
 
   @override

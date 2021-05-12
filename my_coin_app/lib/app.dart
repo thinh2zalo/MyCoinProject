@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_sdk/flutter_sdk.dart';
 
@@ -61,13 +62,17 @@ class _AppState extends State<App> {
 
   Widget _buildApp(AppState state) {
     return MaterialApp(
+      builder: EasyLoading.init(),
       navigatorKey: navigationKey,
       title: 'MyCoin',
       debugShowCheckedModeBanner: false,
       theme: ThemeBuilder.build(context, AppTheme.light.value,
           fontFamily: state?.fontFamily),
-      darkTheme: ThemeBuilder.build(context, AppTheme.dark.value,
-          fontFamily: state?.fontFamily),
+      darkTheme: ThemeBuilder.build(
+        context,
+        AppTheme.dark.value,
+        fontFamily: state?.fontFamily,
+      ),
       themeMode: ThemeBuilder.themeMode(state?.appTheme),
       initialRoute: Routes.home,
       onGenerateRoute: (settings) => Routes.getRoute(settings),

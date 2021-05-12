@@ -81,9 +81,9 @@
     },
     {
       "name": "flutter_spinkit",
-      "rootUri": "file:///Users/thinguyen/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_spinkit-4.1.2+1",
+      "rootUri": "file:///Users/thinguyen/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_spinkit-5.0.0",
       "packageUri": "lib/",
-      "languageVersion": "2.5"
+      "languageVersion": "2.12"
     },
     {
       "name": "flutter_web_plugins",
@@ -350,7 +350,7 @@
       "languageVersion": "2.7"
     }
   ],
-  "generated": "2021-05-12T07:14:18.362851Z",
+  "generated": "2021-05-12T19:13:17.148957Z",
   "generator": "pub",
   "generatorVersion": "2.12.3"
 }

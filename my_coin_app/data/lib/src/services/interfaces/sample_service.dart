@@ -11,4 +11,6 @@ abstract class ISampleService {
   Future<SampleResultResponse<BaseResponse>> sendCoin(
       {String privateKey, String sender, int amount, String recipient});
   Future<SampleResultResponse<TransactionResponse>> fetchPendingTransaction();
+
+  Future<void> mine();
 }

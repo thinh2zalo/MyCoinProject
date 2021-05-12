@@ -16,7 +16,10 @@ class HomeBloc extends BaseBloc<HomeState> {
       _controller.stream.map((event) => event.listAccount);
 
   Stream<List<TransactionResponse>> get listTransaction$ =>
-      _controller.stream.map((event) => event.pendingTransaction);
+      _controller.stream.map((event) {
+        print('pendingTransaction');
+        return event.pendingTransaction;
+      });
 
   void createWallet(String account) async {
     final res = await _business.createNewWallet(account);
@@ -58,6 +61,11 @@ class HomeBloc extends BaseBloc<HomeState> {
     final penddingTransaction = response.items;
     _controller
         .add(latestState.copyWith(pendingTransaction: penddingTransaction));
+  }
+
+  Future<void> mining() async {
+    final response = await _business.mining();
+    loadData();
   }
 
   @override
