@@ -153,9 +153,8 @@ class _HomePageState extends BaseState<HomePage, HomeBloc> {
                                     const Duration(milliseconds: 500), () {
                                   EasyLoading.showSuccess('Great Success!',
                                       duration: Duration(seconds: 1));
+                                  Navigator.pop(context);
                                 });
-
-                                Navigator.pop(context);
                               },
                         child: Container(
                           decoration: BoxDecoration(
@@ -322,7 +321,14 @@ class _HomePageState extends BaseState<HomePage, HomeBloc> {
                 style: theme.textTheme.bodyText2.size10,
               ),
               UIHelper.verticalBox6,
-              Text("0.00", style: theme.textTheme.bodyText1.bold),
+              StreamBuilder<int>(
+                  stream: bloc.total,
+                  builder: (context, snapshot) {
+                    final total = snapshot?.data ?? 0;
+                    return Text('$total ZPICoin',
+                        style: theme.textTheme.bodyText1.bold);
+                  }),
+              UIHelper.verticalBox12,
               _buildListCard(theme),
               Text(
                 'Manage account',

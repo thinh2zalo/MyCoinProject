@@ -17,8 +17,11 @@ class HomeBloc extends BaseBloc<HomeState> {
 
   Stream<List<TransactionResponse>> get listTransaction$ =>
       _controller.stream.map((event) {
-        print('pendingTransaction');
         return event.pendingTransaction;
+      });
+
+  Stream<int> get total => _controller.stream.map((event) {
+        return event.total;
       });
 
   void createWallet(String account) async {
@@ -34,11 +37,17 @@ class HomeBloc extends BaseBloc<HomeState> {
   Future<void> loadData() async {
     final listAccount = await db.getUser();
     List<AccountModel> listAccountWithData = [];
+    var total = 0;
     for (AccountModel account in listAccount) {
       final accountData = await getInforAccount(account.publicKey);
-      listAccountWithData.add(account.coppyWith(amount: accountData.balance));
+      total = total + accountData.balance;
+      listAccountWithData.add(account.coppyWith(
+        amount: accountData.balance,
+        listTransaaction: accountData.listTransaction,
+      ));
     }
-    _controller.add(latestState.copyWith(listAccount: listAccountWithData));
+    _controller.add(
+        latestState.copyWith(listAccount: listAccountWithData, total: total));
     fetchPendingTransaction();
   }
 

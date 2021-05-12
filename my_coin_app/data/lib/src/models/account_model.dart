@@ -1,9 +1,12 @@
+import 'package:data/data.dart';
+
 class AccountModel {
   final int id;
   final String privateKey;
   final String publicKey;
   final String accountName;
   final int amount;
+  final List<TransactionResponse> listTransaaction;
 
   AccountModel({
     this.id,
@@ -11,20 +14,24 @@ class AccountModel {
     this.publicKey,
     this.accountName,
     this.amount,
+    this.listTransaaction,
   });
 
-  AccountModel coppyWith(
-      {int amount,
-      String privateKey,
-      String publicKey,
-      String accountName,
-      int id}) {
+  AccountModel coppyWith({
+    int amount,
+    String privateKey,
+    String publicKey,
+    String accountName,
+    int id,
+    List<TransactionResponse> listTransaaction,
+  }) {
     return AccountModel(
       accountName: accountName ?? this.accountName,
       privateKey: privateKey ?? this.privateKey,
       publicKey: publicKey ?? this.publicKey,
       id: id ?? this.id,
       amount: amount ?? this.amount,
+      listTransaaction: listTransaaction ?? this.listTransaaction,
     );
   }
 

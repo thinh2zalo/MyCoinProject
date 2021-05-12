@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:data/data.dart';
 import 'package:data/src/models/account_model.dart';
 
 import '../entities/entities.dart';
@@ -71,8 +72,9 @@ class AccountDataResponse extends BaseResponse {
   int id;
 
   int balance;
+  List<TransactionResponse> listTransaction;
 
-  AccountDataResponse({this.balance});
+  AccountDataResponse({this.balance, this.listTransaction});
 
   @override
   T fromJson<T extends BaseResponse>(Map<String, dynamic> json) {
@@ -80,9 +82,15 @@ class AccountDataResponse extends BaseResponse {
   }
 
   factory AccountDataResponse.fromJson(Map<String, dynamic> json) {
+    final response = GetIt.I.get<TransactionResponse>();
+
+    final items = (json['addressTransactions'] as List)
+            ?.map((item) =>
+                response.fromJson(_getMap(item)) as TransactionResponse)
+            ?.toList() ??
+        [];
     return AccountDataResponse(
-      balance: json['addressBalance'],
-    );
+        balance: json['addressBalance'], listTransaction: items);
   }
 }
 

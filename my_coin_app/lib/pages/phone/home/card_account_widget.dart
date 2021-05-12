@@ -4,6 +4,7 @@ import 'package:example/helpers/ui_helper.dart';
 import 'package:example/resources/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:example/extensions/extensions.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_sdk/flutter_sdk.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
@@ -62,6 +63,9 @@ class CardAccountWidget extends StatelessWidget {
                         ],
                       ),
                     ),
+                    UIHelper.verticalBox16,
+                    _buildListPenddingTransaction(
+                        theme, accountModel.listTransaaction),
                   ],
                 ),
                 Padding(
@@ -312,8 +316,15 @@ class CardAccountWidget extends StatelessWidget {
                                         sender: accountModel.publicKey,
                                         recipient: recipientController.text,
                                       );
-                                      homeBloc.loadData();
-                                      Navigator.pop(context);
+                                      Future.delayed(
+                                          const Duration(milliseconds: 500),
+                                          () {
+                                        EasyLoading.showSuccess(
+                                            'transaction completed ',
+                                            duration: Duration(seconds: 1));
+                                        homeBloc.loadData();
+                                        Navigator.pop(context);
+                                      });
                                     },
                                     child: Container(
                                       decoration: BoxDecoration(
@@ -359,6 +370,72 @@ class CardAccountWidget extends StatelessWidget {
           )
         ],
       ),
+    );
+  }
+
+  Widget _buildListPenddingTransaction(
+      ThemeData theme, List<TransactionResponse> list) {
+    return Container(
+      padding: UIHelper.horizontalEdgeInsets16,
+      height: 390,
+      child: list.isNotNullOrEmpty
+          ? ListView.builder(
+              shrinkWrap: true,
+              scrollDirection: Axis.vertical,
+              itemCount: list?.length ?? 0,
+              itemBuilder: (context, index) {
+                final transaction = list[index];
+                return Column(
+                  children: [
+                    _buildTransactionItem(theme, transaction.sender,
+                        transaction.recipient, transaction.amount),
+                    // Divider(
+                    //   thickness: 2,
+                    // ),
+                    UIHelper.verticalBox20
+                  ],
+                );
+              })
+          : Center(
+              child: Text(
+                'No transactions yet',
+                style: theme.textTheme.bodyText2.size18,
+              ),
+            ),
+    );
+  }
+
+  Widget _buildTransactionItem(
+      ThemeData theme, String sender, String recipient, int amount) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                Text('Sender: ', style: theme.textTheme.bodyText2.semiBold),
+                Text(
+                    '${sender.substring(0, 5)} . . . ${sender.substring(sender.length - 10, sender.length - 1)}',
+                    style: theme.textTheme.bodyText2),
+              ],
+            ),
+            UIHelper.verticalBox4,
+            Row(
+              children: [
+                Text('recipient: ', style: theme.textTheme.bodyText2.semiBold),
+                Text(
+                    '${recipient.substring(0, 5)} . . . ${recipient.substring(sender.length - 10, sender.length - 1)}',
+                    style: theme.textTheme.bodyText2),
+              ],
+            ),
+          ],
+        ),
+        Text('\$ $amount',
+            style: theme.textTheme.bodyText2.size20.semiBold
+                .textColor(MyColors.card)),
+      ],
     );
   }
 }
