@@ -6,5 +6,6 @@ class ResponseDependencies {
     injector.registerFactory<SampleResponse>(() => SampleResponse());
     injector.registerFactory<AccountResponse>(() => AccountResponse());
     injector.registerFactory<AccountDataResponse>(() => AccountDataResponse());
+    injector.registerFactory<TransactionResponse>(() => TransactionResponse());
   }
 }

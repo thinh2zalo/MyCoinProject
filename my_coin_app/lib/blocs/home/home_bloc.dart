@@ -15,9 +15,17 @@ class HomeBloc extends BaseBloc<HomeState> {
   Stream<List<AccountModel>> get listAccount$ =>
       _controller.stream.map((event) => event.listAccount);
 
+  Stream<List<TransactionResponse>> get listTransaction$ =>
+      _controller.stream.map((event) => event.pendingTransaction);
+
   void createWallet(String account) async {
-    final listAccount = await db.getUser();
-    _controller.add(latestState.copyWith(listAccount: listAccount));
+    final res = await _business.createNewWallet(account);
+    var accountModel = res.items[0].toModel();
+    final accountData = await getInforAccount(res.items[0].publicKey);
+    accountModel.coppyWith(amount: accountData.balance);
+
+    _controller.add(latestState.copyWith(
+        listAccount: latestState.listAccount..add(accountModel)));
   }
 
   Future<void> loadData() async {
@@ -28,11 +36,28 @@ class HomeBloc extends BaseBloc<HomeState> {
       listAccountWithData.add(account.coppyWith(amount: accountData.balance));
     }
     _controller.add(latestState.copyWith(listAccount: listAccountWithData));
+    fetchPendingTransaction();
   }
 
   Future<AccountDataResponse> getInforAccount(String address) async {
     final response = await _business.getAccountData(address);
     return response.items[0];
+  }
+
+  Future<void> sendCoin(
+      {String privateKey, String sender, int amount, String recipient}) async {
+    final response = _business.sendCoin(
+        privateKey: privateKey,
+        sender: sender,
+        amount: amount,
+        recipient: recipient);
+  }
+
+  Future<void> fetchPendingTransaction() async {
+    final response = await _business.fetchPendingTransaction();
+    final penddingTransaction = response.items;
+    _controller
+        .add(latestState.copyWith(pendingTransaction: penddingTransaction));
   }
 
   @override

@@ -25,6 +25,12 @@ class SampleResultResponse<TResponse extends BaseResponse>
   }
 }
 
+// class SendCoinResponse extends BaseResponse {
+//   SendCoinResponse.fromJson(Map<String, dynamic> json) {
+//     final response = json['note'];
+//   }
+// }
+
 class AccountResponse extends BaseResponse {
   int id;
   String privateKey;

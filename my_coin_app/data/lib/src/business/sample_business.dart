@@ -1,3 +1,5 @@
+import 'package:data/src/responses/transaction_response.dart';
+
 import '../responses/response.dart';
 import 'package:flutter_sdk/flutter_sdk.dart';
 
@@ -9,16 +11,6 @@ class SampleBusiness extends BaseBusiness<SampleEntity>
   final ISampleService _service;
   final db = DatabaseHelper();
   SampleBusiness(this._service);
-
-  @override
-  Future<SampleResultResponse<SampleResponse>> fetchProduct() async {
-    final response = await _service.fetchProduct();
-    if (response.success) {
-      final entities = response.items?.map((item) => item.toEntity())?.toList();
-      batchInsertOrUpdate(entities);
-    }
-    return response;
-  }
 
   @override
   Future<SampleResultResponse<AccountResponse>> createNewWallet(
@@ -38,6 +30,24 @@ class SampleBusiness extends BaseBusiness<SampleEntity>
       String address) async {
     final response = await _service.getAccountAdress(address);
     if (response.success) {}
+    return response;
+  }
+
+  @override
+  Future<SampleResultResponse<BaseResponse>> sendCoin(
+      {String privateKey, String sender, int amount, String recipient}) async {
+    final response = await _service.sendCoin(
+        privateKey: privateKey,
+        sender: sender,
+        amount: amount,
+        recipient: recipient);
+    return response;
+  }
+
+  @override
+  Future<SampleResultResponse<TransactionResponse>>
+      fetchPendingTransaction() async {
+    final response = _service.fetchPendingTransaction();
     return response;
   }
 }
