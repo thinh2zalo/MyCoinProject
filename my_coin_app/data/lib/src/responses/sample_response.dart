@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:data/data.dart';
 import 'package:data/src/models/account_model.dart';
 
-import '../entities/entities.dart';
 import 'package:flutter_sdk/flutter_sdk.dart';
 
 Map<String, dynamic> _getMap(dynamic data) {
@@ -124,17 +123,6 @@ class SampleResponse extends BaseResponse {
       description: json['description'],
       regularPrice: json['regularPrice'],
       salePrice: json['salePrice'],
-    );
-  }
-
-  SampleEntity toEntity() {
-    return SampleEntity(
-      id: id,
-      productName: productName,
-      image: image,
-      description: description,
-      regularPrice: regularPrice,
-      salePrice: salePrice,
     );
   }
 }

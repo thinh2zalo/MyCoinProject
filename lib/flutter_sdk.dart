@@ -4,7 +4,6 @@ export 'src/app_localizations/localizations.dart';
 export 'src/blocs/bloc.dart';
 export 'src/constants.dart';
 export 'src/extensions/extension.dart';
-export 'src/map.dart';
 export 'src/model/model.dart';
 export 'src/network/rest_utility.dart';
 export 'src/shared_preferences/preferences.dart';

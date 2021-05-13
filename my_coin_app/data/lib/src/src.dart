@@ -1,6 +1,5 @@
 export 'business/business.dart';
 export 'database/database.dart';
-export 'entities/entities.dart';
 export 'models/model.dart';
 export 'repositories/repository.dart';
 export 'responses/response.dart';

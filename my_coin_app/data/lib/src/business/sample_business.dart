@@ -6,6 +6,18 @@ import 'package:flutter_sdk/flutter_sdk.dart';
 import '../../data.dart';
 import 'interfaces/sample_business.dart';
 
+class SampleEntity extends BaseEntity {
+  @override
+  // TODO: implement table
+  String get table => throw UnimplementedError();
+
+  @override
+  Map<String, dynamic> toJson() {
+    // TODO: implement toJson
+    throw UnimplementedError();
+  }
+}
+
 class SampleBusiness extends BaseBusiness<SampleEntity>
     implements ISampleBusiness {
   final ISampleService _service;
