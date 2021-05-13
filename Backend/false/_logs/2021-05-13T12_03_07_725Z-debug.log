@@ -1,0 +1,42 @@
+0 info it worked if it ends with ok
+1 verbose cli [
+1 verbose cli   '/usr/local/bin/node',
+1 verbose cli   '/usr/local/bin/npm',
+1 verbose cli   'install',
+1 verbose cli   '--no-cache'
+1 verbose cli ]
+2 info using npm@6.14.12
+3 info using node@v14.16.1
+4 verbose npm-session 63f04df4de4640dc
+5 silly install runPreinstallTopLevelLifecycles
+6 silly install loadCurrentTree
+7 silly install readLocalPackageData
+8 timing stage:rollbackFailedOptional Completed in 2ms
+9 timing stage:runTopLevelLifecycles Completed in 519ms
+10 verbose stack Error: Failed to parse json
+10 verbose stack Unexpected token } in JSON at position 254 while parsing near '...calhost:3001",
+10 verbose stack
+10 verbose stack   },
+10 verbose stack   "author": "",
+10 verbose stack  ...'
+10 verbose stack     at parseError (/usr/local/lib/node_modules/npm/node_modules/read-package-json/read-json.js:470:11)
+10 verbose stack     at parseJson (/usr/local/lib/node_modules/npm/node_modules/read-package-json/read-json.js:105:26)
+10 verbose stack     at /usr/local/lib/node_modules/npm/node_modules/read-package-json/read-json.js:52:5
+10 verbose stack     at /usr/local/lib/node_modules/npm/node_modules/graceful-fs/graceful-fs.js:123:16
+10 verbose stack     at FSReqCallback.readFileAfterClose [as oncomplete] (internal/fs/read_file_context.js:63:3)
+11 verbose cwd /Users/thinguyen/Downloads/websocket_backend
+12 verbose Darwin 20.4.0
+13 verbose argv "/usr/local/bin/node" "/usr/local/bin/npm" "install" "--no-cache"
+14 verbose node v14.16.1
+15 verbose npm  v6.14.12
+16 error code EJSONPARSE
+17 error file /Users/thinguyen/Downloads/websocket_backend/package.json
+18 error JSON.parse Failed to parse json
+18 error JSON.parse Unexpected token } in JSON at position 254 while parsing near '...calhost:3001",
+18 error JSON.parse
+18 error JSON.parse   },
+18 error JSON.parse   "author": "",
+18 error JSON.parse  ...'
+19 error JSON.parse Failed to parse package.json data.
+19 error JSON.parse package.json must be actual JSON, not just JavaScript.
+20 verbose exit [ 1, true ]

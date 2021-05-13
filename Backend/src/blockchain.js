@@ -1,15 +1,54 @@
 const uuid = require('uuid/v1'); 
-const currentNodeUrl = process.argv[3];
 const sha256 = require('sha256');
+const currentNodeUrl = process.argv[3];
 
 
-function Blockchain(IDSocket) {
-    this.IDSocket = IDSocket;
+function Blockchain(socketID) {
+    this.socketId = socketID;
+    this.chain = [];
     this.pendingTransactions = [];
     this.currentNodeUrl = currentNodeUrl;
     this.networkNodes = [];
-    this.chain = [];
     this.genesisNewBlock(120, '0', '0'); 
+}
+
+Blockchain.prototype.createTransaction = function (amount, sender, recipient) {
+    const newTransaction = {
+        transactionId: uuid().split('-').join(''),
+        amount: amount,
+        date: new Date().getDay().toString() + "." + new Date().getMonth().toString() + "." + new Date().getFullYear().toString(),
+        sender: sender,
+        recipient: recipient
+    }
+
+    return newTransaction;
+}
+
+Blockchain.prototype.genesisNewBlock = function (nonce, previousBlockHash, hash) {
+    const newBlock = {
+        index: this.chain.length + 1,
+        previousBlockHash: previousBlockHash,
+        timestamp: Date.now(),
+        date: new Date().toString(),
+        transactions: this.pendingTransactions,
+        nonce: nonce,
+        hash: hash,
+    }
+    this.pendingTransactions = []; //reset the pendingTransactions for the next block.
+    this.chain.push(newBlock); //push to the blockchain the new block.
+    return newBlock;
+}
+
+/*returns the last block of the chain.*/
+Blockchain.prototype.getLastBlock = function () {
+    return this.chain[this.chain.length - 1];
+}
+
+
+
+Blockchain.prototype.addTransactionToQueue = function (transactionObject) {
+    this.pendingTransactions.push(transactionObject); 
+    return this.getLastBlock()['index'] + 1;
 }
 
 Blockchain.prototype.hashBlock = function (previousBlockHash, currentBlockData, nonce) {
@@ -18,28 +57,14 @@ Blockchain.prototype.hashBlock = function (previousBlockHash, currentBlockData, 
     return hash;
 }
 
-Blockchain.prototype.getLastBlock = function () {
-    return this.chain[this.chain.length - 1];
-}
-
-Blockchain.prototype.genesisNewBlock = function (nonce, previousHashBlock, hash) {
-    const newBlock = {
-        index: this.chain.length + 1,
-        transactions: this.pendingTransactions,
-        date: new Date().toString(),
-        previousBlockHash: previousHashBlock,
-        timestamp: Date.now(),
-        nonce: nonce,
-        hash: hash,
+Blockchain.prototype.proofOfWork = function (previousBlockHash, currentBlockData) {
+    let nonce = 0;
+    let hash = this.hashBlock(previousBlockHash, currentBlockData, nonce);
+    while (hash.substring(0, 4) !== '2140') { 
+        nonce++;
+        hash = this.hashBlock(previousBlockHash, currentBlockData, nonce);
     }
-    this.chain.push(newBlock); 
-    this.pendingTransactions = []; 
-    return newBlock;
-}
-
-Blockchain.prototype.addTransactionToQueue = function (transactionObject) {
-    this.pendingTransactions.push(transactionObject); 
-    return this.getLastBlock()['index'] + 1;
+    return nonce;
 }
 
 Blockchain.prototype.chainIsValid = function (blockchain) {
@@ -50,7 +75,7 @@ Blockchain.prototype.chainIsValid = function (blockchain) {
         const currentBlock = blockchain[i];
         const prevBlock = blockchain[i - 1];
         const blockHash = this.hashBlock(prevBlock['hash'], { transactions: currentBlock['transactions'], index: currentBlock['index'] }, currentBlock['nonce']);
-        if (blockHash.substring(0, 4) !== '0000') validChain = false;
+        if (blockHash.substring(0, 4) !== '2140') validChain = false;
         if (currentBlock['previousBlockHash'] !== prevBlock['hash']) validChain = false;
     };
 
@@ -93,6 +118,9 @@ Blockchain.prototype.getTransaction = function (transactionId) {
     };
 };
 
+Blockchain.prototype.getTransactionsInQueue = function () {
+    return this.pendingTransactions;
+};
 
 Blockchain.prototype.getAddressInfor = function (address) {
     const addressTransactions = [];
@@ -128,10 +156,6 @@ Blockchain.prototype.getAddressInfor = function (address) {
         addressBalance: balance,
         amountArr: amountArr
     };
-};
-
-Blockchain.prototype.getTransactionsInQueue = function () {
-    return this.pendingTransactions;
 };
 
 
