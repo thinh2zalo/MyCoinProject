@@ -136,7 +136,7 @@ io.on('connection', (socket) => {
             index: lastBlock['index'] + 1
         }
 
-        const nonce = blockchain.proofOfWork(previousBlockHash, currentBlockData);
+        const nonce = blockchain.POW(previousBlockHash, currentBlockData);
         const blockHash = blockchain.hashBlock(previousBlockHash, currentBlockData, nonce);
         const newBlock = blockchain.genesisNewBlock(nonce, previousBlockHash, blockHash);
         const requestOptions = {//a promise to make a new block
