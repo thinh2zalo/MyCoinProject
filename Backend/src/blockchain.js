@@ -14,9 +14,9 @@ function Blockchain(socketID) {
 
 Blockchain.prototype.createTransaction = function (amount, sender, recipient) {
     const newTransaction = {
-        transactionId: uuid().split('-').join(''),
         amount: amount,
-        date: new Date().getDay().toString() + "." + new Date().getMonth().toString() + "." + new Date().getFullYear().toString(),
+        transactionId: uuid().split('-').join(''),
+        date: new Date().getDay().toString() + "/" + new Date().getMonth().toString() + "/" + new Date().getFullYear().toString(),
         sender: sender,
         recipient: recipient
     }
@@ -34,12 +34,11 @@ Blockchain.prototype.genesisNewBlock = function (nonce, previousBlockHash, hash)
         nonce: nonce,
         hash: hash,
     }
-    this.pendingTransactions = []; //reset the pendingTransactions for the next block.
-    this.chain.push(newBlock); //push to the blockchain the new block.
+    this.pendingTransactions = []; 
+    this.chain.push(newBlock);
     return newBlock;
 }
 
-/*returns the last block of the chain.*/
 Blockchain.prototype.getLastBlock = function () {
     return this.chain[this.chain.length - 1];
 }
