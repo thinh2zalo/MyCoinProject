@@ -112,17 +112,14 @@ Blockchain.prototype.getAddressInfor = function (address) {
         return false;
     }
 
-    var amountArr = [];
     
     let balance = 0;
     addressTransactions.forEach(transaction => {
         if (transaction.recipient === address) {
             balance += transaction.amount;
-            amountArr.push(balance);
         }
         else if (transaction.sender === address) {
             balance -= transaction.amount;
-            amountArr.push(balance);
         }
     
     });
@@ -130,7 +127,6 @@ Blockchain.prototype.getAddressInfor = function (address) {
     return {
         addressTransactions: addressTransactions,
         addressBalance: balance,
-        amountArr: amountArr
     };
 };
 
